@@ -5,8 +5,6 @@
 #include <string>
 using namespace std;
 
-
-
 struct Resident
 {
 	string name = "0";
@@ -30,10 +28,40 @@ struct Resident
 		cout << "\n\t Surname: " << surname;
 	}
 };
+
 enum Enum_Menu
 {
 	Add = 1, Remoove, Search, Edit, Print
 };
+
+string NameCorrector(string inname);
+bool HotelRoomCheker(Resident* hotel1room, int& size5, Resident** hotel2room, int& size, int& size10);
+bool OneRoomCheker(Resident* hotel1room, int& size5);
+bool TwoRoomCheker(Resident** hotel2room, int& size, int& size10);
+int Settlement(Resident* hotel1room, int& size5, Resident** hotel2room, int& size, int& size10, int room);
+void Error_No_Free_Rooms();
+void AddResident(Resident* hotel1room, int& size5, Resident** hotel2room, int& size, int& size10);
+void PrintHotel(Resident* hotel1room, int& size5, Resident** hotel2room, int& size, int& size10);
+void RemooveResident(Resident* hotel1room, int& size5, Resident** hotel2room, int& size, int& size10);
+void SearchResident(Resident* hotel1room, int& size5, Resident** hotel2room, int& size, int& size10, int& type, int& room);
+void EditMenu();
+void EditResident(Resident* hotel1room, int& size5, Resident** hotel2room, int& size, int& size10, int& type, int& room);
+void menu(Resident* hotel1room, int& size5, Resident** hotel2room, int& size, int& size10);
+
+int main()
+{
+	int size = 2;
+	int size5 = 5;
+	int size10 = 10;
+
+	Resident* hotel1room = new Resident[size5];
+	Resident** hotel2room = new Resident * [size];
+	hotel2room[0] = new Resident[size10];
+	hotel2room[1] = new Resident[size10];
+
+	for(;;)
+		menu(hotel1room, size5, hotel2room, size, size10);
+}
 
 string NameCorrector(string inname)//Increases the first letters 
 {
@@ -44,7 +72,7 @@ string NameCorrector(string inname)//Increases the first letters
 	return inname;
 }
 
-bool HotelRoomCheker(Resident* hotel1room, int& size5, Resident** hotel2room, int& size, int& size10)
+bool HotelRoomCheker(Resident* hotel1room, int& size5, Resident** hotel2room, int& size, int& size10) // checks for availability
 {
 	for (int i = 0; i < size5; i++)
 	{
@@ -63,7 +91,7 @@ bool HotelRoomCheker(Resident* hotel1room, int& size5, Resident** hotel2room, in
 	}
 }
 
-bool OneRoomCheker(Resident* hotel1room, int& size5)
+bool OneRoomCheker(Resident* hotel1room, int& size5) // checks single numbers
 {
 	for (int i = 0; i < size5; i++)
 	{
@@ -74,7 +102,7 @@ bool OneRoomCheker(Resident* hotel1room, int& size5)
 	}
 }
 
-bool TwoRoomCheker(Resident** hotel2room, int& size, int& size10)
+bool TwoRoomCheker(Resident** hotel2room, int& size, int& size10)// checks rooms for two
 {
 	for (int i = 0; i < size10; i++)
 	{
@@ -84,7 +112,8 @@ bool TwoRoomCheker(Resident** hotel2room, int& size, int& size10)
 		}
 	}
 }
-int Settlement(Resident* hotel1room, int& size5, Resident** hotel2room, int& size, int& size10, int room)
+
+int Settlement(Resident* hotel1room, int& size5, Resident** hotel2room, int& size, int& size10, int room)// returns the digit of a free number
 {
 	if (room == 1)
 	{
@@ -113,6 +142,7 @@ void Error_No_Free_Rooms()
 {
 	cout << "\n\n\tAll rooms ocupated\n\n";
 }
+
 void AddResident(Resident* hotel1room, int& size5, Resident** hotel2room, int& size, int& size10)
 {
 	string name;
@@ -122,9 +152,12 @@ void AddResident(Resident* hotel1room, int& size5, Resident** hotel2room, int& s
 
 	cout << "\n\n\tEnter name: "; cin >> name;
 	name = NameCorrector(name);
+
 	cout << "\n\tEnter surname: "; cin >> surname;
 	surname = NameCorrector(surname);
+
 	cout << "\n\tChooce room tipe\n\t1 -- One person\n\t2 -- Two Person\n\t"; cin >> chooce;
+
 	switch (chooce)
 	{
 	case 1:
@@ -159,7 +192,8 @@ void AddResident(Resident* hotel1room, int& size5, Resident** hotel2room, int& s
 		break;
 	}
 }
-void PrintHotel(Resident* hotel1room, int& size5, Resident** hotel2room, int& size, int& size10)
+
+void PrintHotel(Resident* hotel1room, int& size5, Resident** hotel2room, int& size, int& size10)// displays a list of hotel guests
 {
 	cout << "\n\tOne person rooms:\n\t";
 	for (int i = 0; i < size5; i++)
@@ -187,7 +221,7 @@ void PrintHotel(Resident* hotel1room, int& size5, Resident** hotel2room, int& si
 			hotel2room[1][i].print();
 		}
 	}
-	
+
 }
 
 void RemooveResident(Resident* hotel1room, int& size5, Resident** hotel2room, int& size, int& size10)
@@ -210,6 +244,7 @@ void RemooveResident(Resident* hotel1room, int& size5, Resident** hotel2room, in
 		break;
 	}
 }
+
 void SearchResident(Resident* hotel1room, int& size5, Resident** hotel2room, int& size, int& size10, int& type, int& room)
 {
 	string srarching;
@@ -228,7 +263,6 @@ void SearchResident(Resident* hotel1room, int& size5, Resident** hotel2room, int
 			}
 		}
 	}
-
 	for (int i = 0; i < size; i++)
 	{
 		for (int j = 0; j < size10; j++)
@@ -249,10 +283,12 @@ void SearchResident(Resident* hotel1room, int& size5, Resident** hotel2room, int
 		cout << "\n\tNot found";
 	}
 }
+
 void EditMenu()
 {
 	cout << "\n\n\t1 -- Edit name\n\t2 -- Edit surname\n\t";
 }
+
 void EditResident(Resident* hotel1room, int& size5, Resident** hotel2room, int& size, int& size10, int& type, int& room)
 {
 	string name;
@@ -298,7 +334,7 @@ void EditResident(Resident* hotel1room, int& size5, Resident** hotel2room, int& 
 		}
 	}
 }
-//menu(hotel1room, size5, hotel2room, size, size10);
+
 void menu(Resident* hotel1room, int& size5, Resident** hotel2room, int& size, int& size10)
 {
 	int menu = 0;
@@ -336,21 +372,4 @@ void menu(Resident* hotel1room, int& size5, Resident** hotel2room, int& size, in
 	default:
 		break;
 	}
-}
-
-int main()
-{
-	int size = 2;
-	int size5 = 5;
-	int size10 = 10;
-
-	Resident* hotel1room = new Resident[size5];
-	Resident** hotel2room = new Resident * [size];
-	hotel2room[0] = new Resident[size10];
-	hotel2room[1] = new Resident[size10];
-
-	do
-	{
-		menu(hotel1room, size5, hotel2room, size, size10);
-	} while (true);
 }
